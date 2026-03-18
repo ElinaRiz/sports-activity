@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sports_lab_db2
+    username: postgres
+    password: 123456
+
+jwt:
+  secret: K8d93nF02mA1bZp4Qw9xS7gL0vHcP2rN5uJfE8tB3yR6qW1dC0xV9lM4pT7kY2
+  expiration: 86400000
+
+gateway:
+  secret: aF9vQ2mK7Tz1Lp8Rw4XeS6DhJ3NbUcVy
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
