@@ -1,0 +1,78 @@
+<div class="form-container">
+    <h2 mat-dialog-title>{{ title }}</h2>
+
+    <mat-dialog-content>
+        <form [formGroup]="trainerForm">
+            <div *ngIf="showId">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Id</mat-label>
+                    <input type="text" matInput formControlName="id" readonly />
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Пользователь</mat-label>
+                    <mat-select type="select" formControlName="userId" [disabled]="onlyView">
+                        <mat-option *ngFor="let user of users" [value]="user.id">
+                            {{ user.fullName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="trainerForm.get('userId')?.hasError('required')">
+                        Укажите пользователя
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Специализация</mat-label>
+                    <input type="text" matInput formControlName="specialization" [readonly]="onlyView" maxlength="255" />
+                    <mat-error *ngIf="trainerForm.get('specialization')?.hasError('required')">
+                        Укажите специализацию
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Опыт (лет)</mat-label>
+                    <input type="number" matInput formControlName="experience" min="1" [readonly]="onlyView" />
+                    <mat-error *ngIf="trainerForm.get('experience')?.hasError('required')">
+                        Укажите опыт
+                    </mat-error>
+                    <mat-error *ngIf="trainerForm.get('experience')?.hasError('min')">
+                        Число должно быть положительным
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Достижения</mat-label>
+                    <textarea matInput formControlName="achievements" [readonly]="onlyView"></textarea>
+                    <mat-error *ngIf="trainerForm.get('achievements')?.hasError('required')">
+                        Укажите достижения
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Статус</mat-label>
+                    <mat-select formControlName="status" [disabled]="onlyView">
+                        <mat-option *ngFor="let status of statusList" [value]="status">{{ status }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="trainerForm.get('status')?.hasError('required')">
+                        Укажите статус
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" *ngIf="!onlyView">
+        <button class="btn btn-outline-danger mx-2" (click)="cancel()">Отмена</button>
+        <button class="btn btn-primary" [disabled]="trainerForm.invalid" (click)="submit()">Сохранить</button>
+    </mat-dialog-actions>
+</div>

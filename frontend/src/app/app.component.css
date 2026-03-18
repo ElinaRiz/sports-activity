@@ -1,0 +1,15 @@
+.nav-link {
+  font-size: 1.3em;
+}
+
+.bg-style {
+  background-color: #1b1297;
+}
+
+nav {
+  position: relative;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  background: #fff !important;
+}

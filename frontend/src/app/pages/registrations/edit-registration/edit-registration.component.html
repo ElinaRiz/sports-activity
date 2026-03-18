@@ -1,0 +1,78 @@
+<div class="form-container">
+    <h2 mat-dialog-title>{{ title }}</h2>
+
+    <mat-dialog-content>
+        <form [formGroup]="registrationForm">
+            <div *ngIf="showId">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Id</mat-label>
+                    <input matInput formControlName="id" readonly />
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Активность</mat-label>
+                    <input matInput formControlName="activityName" readonly />
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Пользователь</mat-label>
+                    <mat-select formControlName="userId" [disabled]="onlyView">
+                        <mat-option *ngFor="let u of users" [value]="u.id">
+                            {{ u.fullName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="registrationForm.get('userId')?.hasError('required')">
+                        Выберите пользователя
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Дата регистрации</mat-label>
+                    <input type="datetime-local" matInput formControlName="registrationDate" [readonly]="onlyView" />
+                    <mat-error *ngIf="registrationForm.get('registrationDate')?.hasError('required')">
+                        Укажите дату!
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Статус оплаты</mat-label>
+                    <mat-select formControlName="paymentStatus" [disabled]="onlyView">
+                        <mat-option *ngFor="let p of paymentStatuses" [value]="p">
+                            {{ p }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="registrationForm.get('paymentStatus')?.hasError('required')">
+                        Укажите статус оплаты
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Посещение</mat-label>
+                    <mat-select formControlName="attendanceStatus" [disabled]="onlyView">
+                        <mat-option [value]="true">Присутствовал</mat-option>
+                        <mat-option [value]="false">Отсутствовал</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="registrationForm.get('attendanceStatus')?.hasError('required')">
+                        Укажите статус посещения
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" *ngIf="!onlyView">
+        <button class="btn btn-outline-danger mx-2" (click)="cancel()">Отмена</button>
+        <button class="btn btn-primary" [disabled]="registrationForm.invalid" (click)="submit()">Сохранить</button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,64 @@
+<div class="form-container">
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <mat-dialog-content>
+        <form [formGroup]="activityTypeForm">
+            <div *ngIf="showId">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Id</mat-label>
+                    <input type="text" matInput formControlName="id" readonly />
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Название</mat-label>
+                    <input type="text" matInput formControlName="name" maxlength="100" [readonly]="onlyView" />
+                    <mat-error *ngIf="activityTypeForm.get('name')?.hasError('required')">
+                        Укажите название
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Базовая длительность (мин)</mat-label>
+                    <input type="number" matInput formControlName="baseDuration" min="1" max="999"
+                        [readonly]="onlyView" />
+                    <mat-error *ngIf="activityTypeForm.get('baseDuration')?.hasError('required')">
+                        Укажите длительность
+                    </mat-error>
+                    <mat-error *ngIf="activityTypeForm.get('baseDuration')?.hasError('min')">
+                        Число должно быть положительным
+                    </mat-error>
+                    <mat-error *ngIf="activityTypeForm.get('baseDuration')?.hasError('max')">
+                        Число должно быть меньше 1000
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Базовая стоимость</mat-label>
+                    <input type="number" matInput formControlName="baseCost" min="1" max="99999"
+                        [readonly]="onlyView" />
+                    <mat-error *ngIf="activityTypeForm.get('baseCost')?.hasError('required')">
+                        Укажите стоимость
+                    </mat-error>
+                    <mat-error *ngIf="activityTypeForm.get('baseCost')?.hasError('min')">
+                        Число должно быть положительным
+                    </mat-error>
+                    <mat-error *ngIf="activityTypeForm.get('baseCost')?.hasError('max')">
+                        Число должно быть меньше 100000
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" *ngIf="!onlyView">
+        <button class="btn btn-outline-danger mx-2" (click)="cancel()">Отмена</button>
+        <button class="btn btn-primary" color="primary" [disabled]="activityTypeForm.invalid" (click)="submit()">
+            Сохранить
+        </button>
+    </mat-dialog-actions>
+</div>

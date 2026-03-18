@@ -1,0 +1,81 @@
+<div class="col-md-12">
+    <div class="card card-container">
+        <h3 class="card-title text-center mb-4">Регистрация</h3>
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group">
+                <label for="login">Логин</label>
+                <input type="text" class="form-control" name="login" [(ngModel)]="form.login" required minlength="3"
+                    maxlength="30" #login="ngModel" />
+                <div class="form-text text-danger" *ngIf="login.errors && f.submitted">
+                    <div *ngIf="login.errors['required']">Логин не введён</div>
+                    <div *ngIf="login.errors['minlength']">
+                        Логин должен состоять минимум из 3 символов
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fullName">ФИО</label>
+                <input type="text" class="form-control" name="fullName" [(ngModel)]="form.fullName" required
+                    maxlength="200" #fullName="ngModel" />
+                <div class="form-text text-danger" *ngIf="fullName.errors && f.submitted">
+                    <div *ngIf="fullName.errors['required']">ФИО не введено</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email
+                    #email="ngModel" />
+                <div class="form-text text-danger" *ngIf="email.errors && f.submitted">
+                    <div *ngIf="email.errors['required']">Почта не введена</div>
+                    <div *ngIf="email.errors['email']">Некорректный ввод почты</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="text" class="form-control" name="phone" [(ngModel)]="form.phone" required maxlength="12"
+                    #phone="ngModel" />
+                <div class="form-text text-danger" *ngIf="phone.errors && f.submitted">
+                    <div *ngIf="phone.errors['required']">Телефон не введён</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Дата рождения</label>
+                <input type="date" class="form-control" name="birthDate" [(ngModel)]="form.birthDate" required
+                    #birthDate="ngModel" />
+                <div class="form-text text-danger" *ngIf="birthDate.errors && f.submitted">
+                    <div *ngIf="birthDate.errors['required']">Дата рождения не введена</div>
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <label for="password">Пароль</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
+                    minlength="5" #password="ngModel" />
+                <div class="form-text text-danger" *ngIf="password.errors && f.submitted">
+                    <div *ngIf="password.errors['required']">Пароль не введен</div>
+                    <div *ngIf="password.errors['minlength']">
+                        Пароль должен состоять минимум из 5 символов
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <label for="confirmPassword">Подтвердите пароль</label>
+                <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="form.confirmPassword"
+                    required minlength="5" #confirmPassword="ngModel" />
+                <div class="form-text text-danger" *ngIf="confirmPassword.errors && f.submitted">
+                    <div *ngIf="confirmPassword.errors['required']">
+                        Пароль не введен
+                    </div>
+                    <div *ngIf="confirmPassword.errors['minlength']">
+                        Пароль должен состоять минимум из 5 символов
+                    </div>
+                </div>
+            </div>
+            <div class="form-text text-danger" *ngIf="isPasswordNotEquals">
+                Пароли не совпадают!
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+</div>

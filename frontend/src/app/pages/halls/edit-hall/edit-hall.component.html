@@ -1,0 +1,60 @@
+<div class="form-container">
+  <h2 mat-dialog-title>
+    {{ title }}
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="hallForm">
+      <div *ngIf="showId">
+        <mat-form-field style="width: 500px">
+          <mat-label>id</mat-label>
+          <input type="text" matInput formControlName="id" readonly />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Название</mat-label>
+          <input type="text" matInput formControlName="name" maxlength="100" [readonly]="onlyView" />
+          <mat-error *ngIf="hallForm.get('name')?.hasError('required')">
+            Укажите название
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Номер комнаты</mat-label>
+          <input type="number" matInput formControlName="room" min="1" [readonly]="onlyView" />
+          <mat-error *ngIf="hallForm.get('room')?.hasError('required')">
+            Укажите номер комнаты
+          </mat-error>
+          <mat-error *ngIf="hallForm.get('room')?.hasError('min')">
+            Число должно быть положительным
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Вместимость</mat-label>
+          <input type="number" matInput formControlName="capacity" min="1" [readonly]="onlyView" />
+          <mat-error *ngIf="hallForm.get('capacity')?.hasError('required')">
+            Укажите вместимость
+          </mat-error>
+          <mat-error *ngIf="hallForm.get('capacity')?.hasError('min')">
+            Число должно быть положительным
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" *ngIf="!onlyView">
+    <button class="btn btn-outline-danger mx-2" (click)="cancel()">
+      Отмена
+    </button>
+    <button class="btn btn-primary" color="primary" [disabled]="hallForm.invalid" (click)="submit()">
+      Сохранить
+    </button>
+  </mat-dialog-actions>
+</div>

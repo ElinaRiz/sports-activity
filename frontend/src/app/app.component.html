@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-style">
+  <div class="container-fluid">
+    <ul class="navbar-nav" routerLinkActive="active">
+      <li class="nav-item" *ngIf="role === 'ADMIN' || (role === 'TRAINER')">
+        <a class="nav-link" routerLink="/users">Пользователи</a>
+      </li>
+      <li class="nav-item" *ngIf="role">
+        <a class="nav-link" routerLink="/trainers">Тренеры</a>
+      </li>
+      <li class="nav-item" *ngIf="(role === 'ADMIN') || (role === 'TRAINER')">
+        <a class="nav-link" routerLink="/halls">Залы</a>
+      </li>
+      <li class="nav-item" *ngIf="role">
+        <a class="nav-link" routerLink="/activity-types">Виды занятий</a>
+      </li>
+      <li class="nav-item" *ngIf="role">
+        <a class="nav-link" routerLink="/activities">Занятия</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="!role">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">Войти</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register">Регистрация</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="role">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/profile">{{
+          username
+          }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">Выйти</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

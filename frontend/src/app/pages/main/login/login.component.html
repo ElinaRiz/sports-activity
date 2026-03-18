@@ -1,0 +1,37 @@
+<div class="col-md-12">
+  <div class="card card-container">
+    <h3 class="card-title text-center mb-4">Вход</h3>
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="login">Логин</label>
+        <input type="text" class="form-control" name="login" [(ngModel)]="form.login" required #login="ngModel" />
+        <div class="form-text text-danger" *ngIf="login.errors && f.submitted">
+          Логин не введён
+        </div>
+      </div>
+      <div class="form-group mb-4">
+        <label for="password">Пароль</label>
+        <div class="input-group">
+          <input [type]="fieldPasswordTextType ? 'text' : 'password'" class="form-control" name="password"
+            [(ngModel)]="form.password" required minlength="5" #password="ngModel" />
+          <span class="input-group-text">
+            <i class="fa" [ngClass]="{
+                'fa-eye-slash': !fieldPasswordTextType,
+                'fa-eye': fieldPasswordTextType
+              }" (click)="toggleFieldPasswordTextType()"></i>
+          </span>
+        </div>
+        <div class="form-text text-danger" *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors['required']">Пароль не введён</div>
+          <div *ngIf="password.errors['minlength']">
+            Пароль должен состоять минимум из 5 символов
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Войти</button>
+      </div>
+    </form>
+  </div>
+</div>

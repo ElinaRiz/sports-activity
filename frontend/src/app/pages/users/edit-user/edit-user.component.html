@@ -1,0 +1,90 @@
+<div class="form-container">
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <mat-dialog-content>
+        <form [formGroup]="userForm">
+            <div *ngIf="showId && (role == 'ADMIN')">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Id</mat-label>
+                    <input type="text" matInput formControlName="id" readonly />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Логин</mat-label>
+                    <input type="text" matInput formControlName="login" [readonly]="onlyView || flagPass" minlength="3"
+                        maxlength="50" />
+                    <mat-error *ngIf="userForm.get('login')?.hasError('required')">
+                        Укажите логин
+                    </mat-error>
+                    <mat-error *ngIf="userForm.get('login')?.hasError('minlength')">
+                        Логин должен состоять минимум из 3 символов
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!showId || flagPass">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Пароль</mat-label>
+                    <input type="text" matInput formControlName="password" [readonly]="onlyView" minlength="5" />
+                    <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">
+                        Пароль должен состоять минимум из 5 символов
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!flagPass">
+                <mat-form-field style="width: 500px">
+                    <mat-label>ФИО</mat-label>
+                    <input type="text" matInput formControlName="fullName" [readonly]="onlyView" maxlength="200" />
+                    <mat-error *ngIf="userForm.get('fullName')?.hasError('required')">
+                        Укажите ФИО
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!flagPass">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput formControlName="email" [readonly]="onlyView" maxlength="100" />
+                    <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+                        Укажите email
+                    </mat-error>
+                    <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+                        Неверный формат
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!flagPass">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Телефон</mat-label>
+                    <input type="text" matInput formControlName="phone" [readonly]="onlyView" maxlength="12" />
+                    <mat-error *ngIf="userForm.get('phone')?.hasError('required')">
+                        Укажите телефон
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!flagPass">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Дата рождения</mat-label>
+                    <input type="date" matInput formControlName="birthDate" [readonly]="onlyView" />
+                    <mat-error *ngIf="userForm.get('birthDate')?.hasError('required')">
+                        Укажите дату рождения
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!flagPass && role == 'ADMIN'">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Роль</mat-label>
+                    <mat-select formControlName="role" [disabled]="onlyView">
+                        <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userForm.get('role')?.hasError('required')">
+                        Укажите роль!
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" *ngIf="!onlyView">
+        <button class="btn btn-outline-danger mx-2" (click)="cancel()">Отмена</button>
+        <button class="btn btn-primary" [disabled]="userForm.invalid" (click)="submit()">Сохранить</button>
+    </mat-dialog-actions>
+</div>

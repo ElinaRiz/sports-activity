@@ -1,0 +1,64 @@
+<div class="form-container">
+  <h2 mat-dialog-title>{{ title }}</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="reviewForm">
+      <div *ngIf="showId">
+        <mat-form-field style="width: 500px">
+          <mat-label>Id</mat-label>
+          <input matInput formControlName="id" readonly />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Активность</mat-label>
+          <input matInput formControlName="registrationActivityName" readonly />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Пользователь</mat-label>
+          <mat-select formControlName="registrationId" [disabled]="onlyView">
+            <mat-option *ngFor="let u of registration" [value]="u.id">
+              {{ u.userName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="reviewForm.get('registrationId')?.hasError('required')">
+            Выберите пользователя
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Рейтинг</mat-label>
+          <input type="number" matInput formControlName="rating" min="1" max="5" [readonly]="onlyView" />
+          <mat-error *ngIf="reviewForm.get('rating')?.hasError('required')">
+            Укажите рейтинг
+          </mat-error>
+          <mat-error *ngIf="reviewForm.get('rating')?.hasError('min')">
+            Рейтинг должно быть положительным
+          </mat-error>
+          <mat-error *ngIf="reviewForm.get('rating')?.hasError('max')">
+            Рейтинг должно от 1 до 5
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Комментарий</mat-label>
+          <textarea matInput formControlName="comment" [readonly]="onlyView" maxlength="500"></textarea>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" *ngIf="!onlyView">
+    <button class="btn btn-outline-danger mx-2" (click)="cancel()">Отмена</button>
+    <button class="btn btn-primary" [disabled]="reviewForm.invalid" (click)="submit()">Сохранить</button>
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,151 @@
+<div class="form-container">
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <mat-dialog-content>
+        <form [formGroup]="activityForm">
+            <div *ngIf="showId">
+                <mat-form-field style="width: 500px">
+                    <mat-label>Id</mat-label>
+                    <input type="text" matInput formControlName="id" readonly />
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Название</mat-label>
+                    <input type="text" matInput formControlName="name" maxlength="100" [readonly]="onlyView" />
+                    <mat-error *ngIf="activityForm.get('name')?.hasError('required')">
+                        Укажите название
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Вид занятия</mat-label>
+                    <mat-select formControlName="activityTypeId" [disabled]="onlyView">
+                        <mat-option *ngFor="let type of activityTypes" [value]="type.id">{{ type.name }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="activityForm.get('activityTypeId')?.hasError('required')">
+                        Выберите вид занятия
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Тренер</mat-label>
+                    <mat-select formControlName="trainerId" [disabled]="onlyView">
+                        <mat-option *ngFor="let trainer of trainers" [value]="trainer.id">{{ trainer.userName
+                            }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="activityForm.get('trainerId')?.hasError('required')">
+                        Выберите тренера
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Зал</mat-label>
+                    <mat-select formControlName="hallId" [disabled]="onlyView">
+                        <mat-option *ngFor="let hall of halls" [value]="hall.id">{{ hall.name }} ({{ hall.room
+                            }})</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="activityForm.get('hallId')?.hasError('required')">
+                        Выберите зал
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Уровень активности</mat-label>
+                    <mat-select formControlName="activityLevel" [disabled]="onlyView">
+                        <mat-option *ngFor="let activityLevel of activityLevels" [value]="activityLevel">{{
+                            activityLevel }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="activityForm.get('activityLevel')?.hasError('required')">
+                        Укажите уровень активности
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Дата и время начала</mat-label>
+                    <input type="datetime-local" matInput formControlName="startTime" [readonly]="onlyView" />
+                    <mat-error *ngIf="activityForm.get('startTime')?.hasError('required')">
+                        Выберите дату и время начала
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Длительность (мин)</mat-label>
+                    <input type="number" matInput formControlName="duration" min="1" max="999" [readonly]="onlyView" />
+                    <mat-error *ngIf="activityForm.get('duration')?.hasError('required')">
+                        Выберите длительность
+                    </mat-error>
+                    <mat-error *ngIf="activityForm.get('duration')?.hasError('min')">
+                        Число должно быть положительным
+                    </mat-error>
+                    <mat-error *ngIf="activityForm.get('duration')?.hasError('max')">
+                        Число должно быть меньше 1000
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Максимальное количество участников</mat-label>
+                    <input type="number" matInput formControlName="maxParticipants" min="1" max="999"
+                        [readonly]="onlyView" />
+                    <mat-error *ngIf="activityForm.get('maxParticipants')?.hasError('required')">
+                        Выберите количество участников
+                    </mat-error>
+                    <mat-error *ngIf="activityForm.get('maxParticipants')?.hasError('min')">
+                        Число должно быть положительным
+                    </mat-error>
+                    <mat-error *ngIf="activityForm.get('maxParticipants')?.hasError('max')">
+                        Число должно быть меньше 1000
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Стоимость</mat-label>
+                    <input type="number" matInput formControlName="cost" min="1" max="99999" [readonly]="onlyView" />
+                    <mat-error *ngIf="activityForm.get('cost')?.hasError('required')">
+                        Выберите стоимость
+                    </mat-error>
+                    <mat-error *ngIf="activityForm.get('cost')?.hasError('min')">
+                        Число должно быть положительным
+                    </mat-error>
+                    <mat-error *ngIf="activityForm.get('cost')?.hasError('max')">
+                        Число должно быть меньше 100000
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 500px">
+                    <mat-label>Статус</mat-label>
+                    <mat-select formControlName="status" [disabled]="onlyView">
+                        <mat-option *ngFor="let status of statusList" [value]="status">{{
+                            status }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="activityForm.get('status')?.hasError('required')">
+                        Укажите статус
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" *ngIf="!onlyView">
+        <button class="btn btn-outline-danger mx-2" (click)="cancel()">Отмена</button>
+        <button class="btn btn-primary" [disabled]="activityForm.invalid" (click)="submit()">Сохранить</button>
+    </mat-dialog-actions>
+</div>
