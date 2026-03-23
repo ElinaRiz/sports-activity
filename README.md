@@ -7,7 +7,7 @@
 
 Приложение построено на микросервисной архитектуре.  
 Сервисы взаимодействуют через REST API (с использованием WebClient) и асинхронные сообщения (RabbitMQ). 
-Для обнаружения и регистрации сервисов используется Eureka Server.
+Для обнаружения и регистрации сервисов используется Eureka Server. Данные хранятся в PostgreSQL.
 
 ## Структура приложения
 
@@ -30,6 +30,6 @@
 - **auth-service**: Java, Spring Boot, Spring Data JPA, Spring Security, JWT, Eureka Client
 - **management-service**: Java, Spring Boot, Spring Data JPA, Jackson Databind, Spring Security, Eureka Client, Spring AMQP, WebClient
 - **analytics-service**: Python, FastAPI, Uvicorn, SQLAlchemy, PostgreSQL (psycopg2-binary), python-dotenv, aio-pika (RabbitMQ), py-eureka-client, requests
-- **frontend**: Java, Spring Boot, Spring Security, JWT, Eureka Client
+- **frontend**: TypeScript, Angular, Bootstrap
 - **eureka-server**: Java, Spring Boot, Eureka Server
 - **api-gateway**: Java, Spring Boot, Spring Cloud Gateway, Spring Cloud LoadBalancer, Eureka Client
